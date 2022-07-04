@@ -1,20 +1,18 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const initialState = {
-    user: null,
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    message: "",
+const API_URL = "/api/users";
+
+// Register user
+const register = async (userData) => {
+    const response = await axios.post(API_URL, userData);
+
+    if (response.data) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+    }
+
+    return response.data;
 }
 
-export const authSlice = createSlice({
-    name: "auth",
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
+const authService = { register };
 
-    }
-})
-
-export default authSlice.reducer;
+export default authService;
